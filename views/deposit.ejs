@@ -1,0 +1,102 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+	<title>Deposit $$$</title>
+	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js">
+	</script>
+	<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+  <link rel="stylesheet" href="./css/main.css">
+  <script type="text/javascript">
+		$(document).ready(() => {
+
+			$(".deposit-form").each(function() {
+				let form = $(this);
+
+				form.submit((event) => {
+					event.preventDefault();
+
+					const formData = new FormData();
+					formData.append("amount", form.serializeArray()[0].value);
+					formData.append("accountId", form.attr("account-id"));
+					formData.append("accountType", form.attr("account-type"));
+					formData.append('image', document.getElementById('img-' + form.attr("account-id")).files[0]);
+
+					$.ajax({
+						type: 'POST',
+						url: '/data-deposit',
+						data: formData,
+						dataType: "text",
+						// these next 2 flags are needed because of sending image
+						contentType: false,
+						processData: false,
+
+						success: (response) => {
+							// if success, reload page
+							location.reload();
+						},
+						error: (jqXHR) => {
+							document.getElementById("check").textContent = jqXHR.responseText;
+						}
+					});
+				});
+			});
+
+		});
+	</script>
+</head>
+
+<body>
+	<div class="col-md-4 col-md-offset-4">
+
+        <p>Pick an account below in which to deposit money.</p>
+
+		<div>
+			<p>Checking Accounts</p>
+		</div>
+		<div>
+			<table class="table table-hover text-center">
+        <% for (let i = 0; i < checkingAccs.length; i++) { %>
+          <tr>
+            <td class="col-md-4"><%= checkingAccs[i].name %></td> 
+            <td class="col-md-4">$<%= checkingAccs[i].balance %></td>
+            <td class="col-md-4">
+              Deposit
+              <form method="POST" account-id="<%= checkingAccs[i].unique_id %>" account-type="checking" enctype="multipart/form-data" class="deposit-form">
+								<input type="file" id="img-<%= checkingAccs[i].unique_id %>" value = "image" name="img" accept="image/*" required>
+                <input placeholder="Amount" name="amount">
+              </form>
+            </td>
+          </tr>
+        <% } %>
+			</table>
+		</div>
+
+		<div>
+			<p>Savings Accounts</p>
+		</div>
+		<div>
+			<table class="table table-hover text-center">
+        <% for (let i = 0; i < savingsAccs.length; i++) { %>
+          <tr>
+            <td class="col-md-4"><%= savingsAccs[i].name %></td> 
+            <td class="col-md-4">$<%= savingsAccs[i].balance %></td>
+            <td class="col-md-4">
+              Deposit
+              <form method="POST" account-id="<%= savingsAccs[i].unique_id %>" account-type="saving" enctype="multipart/form-data" class="deposit-form">
+								<input type="file" id="img-<%= savingsAccs[i].unique_id %>" name="img" accept="image/*" required>
+                <input placeholder="Amount" name="amount">
+              </form>
+            </td>
+          </tr>
+        <% } %>
+			</table>
+			<div class="abc">
+				<a href="/profile">Back to summary page</a>
+			</div>
+			<div class="bg-danger">
+				<span id="check"></span>
+			</div>        
+    </body>
+    </html>

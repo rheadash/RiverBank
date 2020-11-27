@@ -1,0 +1,71 @@
+<html>
+<head>
+	<title>Close accounts $$$</title>
+	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js">
+    </script>
+    
+	<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+  <link rel="stylesheet" href="./css/main.css">
+  <script type="text/javascript">
+    $(document).ready( () => {
+
+        $( "close-form" ).submit( (event) => {
+            event.preventDefault();
+
+            let form = $(this);
+
+            form.submit((event) => {
+                let fromAccount = form.serializeArray()[2].value;
+                console.log("From:" + form[0].value);
+                console.log("To: " + form[1].value);
+                console.log("Amt: " + form[2].value);
+                form[2].reset();
+                
+                $.ajax({
+                    type: 'POST',
+                    url: '/closeaccount',
+                    data: {
+                        amount: amountValue,
+                        fromAccount: form[0].value,
+                        toAccount: form[1].attr("account-id"),
+                    },
+                    dataType: "text",
+                    success: (response) => {
+							// if success, reload page
+							location.reload();
+						},
+						error: (jqXHR) => {
+							document.getElementById("check").textContent = jqXHR.responseText;
+                        }
+                    });
+            });
+        });       
+    });
+    </script>
+</head>
+
+<body>
+    <p>Pick account to close.</p>
+
+    <p> List of accounts: </p>
+
+    <form id = "close-form" method = "POST">
+        <select id="account" name = "account">
+            <% for ( var i = 0; i < accounts.length; i++ )
+            {
+                %><option value="<%= accounts[i].unique_id %>"><%=accounts[i].name %></option><%
+            }
+            %>
+        </select>
+
+        <input type="submit" value="Close account" class="btn btn-success">
+    </form>
+
+    <div class="abc">
+        <a href="/profile">Back to summary page</a>
+    </div>
+
+    
+</body>
+</html>
