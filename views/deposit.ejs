@@ -43,15 +43,45 @@
 				});
 			});
 
+			$('input[type=file]').each(function(event) {
+				const jQElement = $(this);
+				jQElement.change((event) => {
+					const image = jQElement.get(0);
+					if (image.files && image.files[0]) {
+						const reader = new FileReader();
+						reader.onload = (e) => {
+							document.getElementById("imgBox").style.display = "block";
+
+							document.getElementById("imgPreview").setAttribute('src', e.target.result);
+						}
+						reader.readAsDataURL(image.files[0]);
+					}
+				});
+			});
 		});
+
+		function setSize() {
+			const imgPreview = document.getElementById("imgPreview");
+			imgPreview.removeAttribute('width');
+			imgPreview.removeAttribute('height');
+			const pageWidth = document.getElementById("mainBlock").getBoundingClientRect().width;
+			imgPreview.setAttribute('width', pageWidth);
+			// Limit height to 400 px
+			if (imgPreview.height > 400) {
+				imgPreview.setAttribute('height', 400);
+				imgPreview.removeAttribute('width');
+			}
+		}
 	</script>
 </head>
 
 <body>
-	<div class="col-md-4 col-md-offset-4">
-
-        <p>Pick an account below in which to deposit money.</p>
-
+	<div id="mainBlock" class="col-md-4 col-md-offset-4">
+		<p>Pick an account below in which to deposit money.</p>
+		<div id="imgBox">
+			<p>Image Preview</p>
+			<img id="imgPreview" onload="setSize()">
+		</div>
 		<div>
 			<p>Checking Accounts</p>
 		</div>

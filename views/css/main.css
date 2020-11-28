@@ -22,3 +22,12 @@ input{
 	margin-bottom: 5px;
 	border-radius: 5px;
 }
+#imgBox {
+    display: none;
+}
+#imgBox > p {    
+    font: bold 24px "Arial";
+}
+#imgPreview {
+    border: 3px solid black;
+}
