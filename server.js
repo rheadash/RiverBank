@@ -7,7 +7,7 @@ var mongoose = require('mongoose');
 var session = require('express-session');
 var MongoStore = require('connect-mongo')(session);
 
-mongoose.connect("mongodb+srv://christianuser:christianuser@cluster0.ttuir.mongodb.net/<dbname>?retryWrites=true&w=majority");
+mongoose.connect("mongodb+srv://josh:josh123@atm.nwqi3.mongodb.net/ATMDB?retryWrites=true&w=majority");
 
 var db = mongoose.connection;
 db.on('error', console.error.bind(console, 'connection error:'));
