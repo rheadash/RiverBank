@@ -6,6 +6,7 @@ var Saving = require('../models/saving');
 var Transaction = require('../models/transaction');
 var multer = require('multer');
 const path = require('path');
+const mkdirp = require('mkdirp');
 const { Mongoose } = require('mongoose');
 
 router.get('/', (req, res, next) => {
@@ -522,7 +523,8 @@ router.get('/deposit', (req, res, next) => {
 //Deposit
 const storage = multer.diskStorage({
 	destination: function(req, file, cb) {
-		cb(null, 'uploads/');
+		const path = './uploads/';
+		mkdirp(path, err => cb(err, path));
 	},
 	filename: function(req, file, cb) {
 		// Assign file name including current Unix timestamp
