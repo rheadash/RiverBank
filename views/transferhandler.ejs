@@ -1,6 +1,6 @@
 <html>
 <head>
-	<title>Transfer $$$</title>
+	<title>Cross-Accounts Transfer</title>
 	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
 	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js">
     </script>
@@ -52,17 +52,17 @@
 
     <form id = "transfer-form" method = "POST">
         <select id="from" name = "from">
-            <% for ( var i = 0; i < accounts.length; i++ )
+            <% for ( var i = 0; i < accounts1.length; i++ )
             {
-                %><option value="<%= accounts[i].unique_id %>"><%=accounts[i].name %>:  $<%=accounts[i].balance %></option><%
+                %><option value="<%= accounts1[i].unique_id %>"><%=accounts1[i].name %>:  $<%=accounts1[i].balance %></option><%
             }
             %>
         </select>
         <p> To account: </p>
         <select id="to" name = "to">
-            <% for ( var i = 0; i < accounts.length; i++ )
+            <% for ( var i = 0; i < accounts2.length; i++ )
             {
-                %><option value="<%= accounts[i].unique_id %>"><%=accounts[i].name %>:  $<%=accounts[i].balance %></option><%
+                %><option value="<%= accounts2[i].unique_id %>"><%=accounts2[i].name %>:  $<%=accounts2[i].balance %></option><%
             }
             %>
         </select>
@@ -72,13 +72,6 @@
         <input type="submit" value="Transfer" class="btn btn-success">
     </form>
 
-
-    <p>Or you can transfer to another RiverBank customer</p>
-
-    <form action="/customer-transfer" id="customer-transfer-form" method="POST">
-        <input type="text" name="receipientUsername" placeholder="receipientUsername">
-        <input type="submit" value="toCustomerTrasnfer">
-    </form>
 
     <div class="abc">
         <a href="/profile">Back to summary page</a>

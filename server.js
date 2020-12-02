@@ -7,7 +7,11 @@ var mongoose = require('mongoose');
 var session = require('express-session');
 var MongoStore = require('connect-mongo')(session);
 
-mongoose.connect('mongodb://localhost/ManualAuth');
+mongoose.connect("mongodb+srv://josh:josh123@atm.nwqi3.mongodb.net/ATMDB?retryWrites=true&w=majority", {
+  useNewUrlParser: true,
+  useUnifiedTopology: true,
+  useFindAndModify: false
+});
 
 var db = mongoose.connection;
 db.on('error', console.error.bind(console, 'connection error:'));
