@@ -7,42 +7,7 @@
     
 	<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
   <link rel="stylesheet" href="./css/main.css">
-  <script type="text/javascript">
-    $(document).ready( () => {
-
-        $( "transfer-form" ).submit( (event) => {
-            event.preventDefault();
-
-            let form = $(this);
-
-            form.submit((event) => {
-                let fromAccount = form.serializeArray()[2].value;
-                console.log("From:" + form[0].value);
-                console.log("To: " + form[1].value);
-                console.log("Amt: " + form[2].value);
-                form[2].reset();
-                
-                $.ajax({
-                    type: 'POST',
-                    url: '/transfer',
-                    data: {
-                        amount: amountValue,
-                        fromAccount: form[0].value,
-                        toAccount: form[1].attr("account-id"),
-                    },
-                    dataType: "text",
-                    success: (response) => {
-							// if success, reload page
-							location.reload();
-						},
-						error: (jqXHR) => {
-							document.getElementById("check").textContent = jqXHR.responseText;
-                        }
-                    });
-            });
-        });       
-    });
-    </script>
+  
 </head>
 
 <body>
@@ -50,7 +15,7 @@
 
     <p> From account: </p>
 
-    <form id = "transfer-form" method = "POST">
+    <form action="/transfer" id = "transfer-form" method = "POST">
         <select id="from" name = "from">
             <% for ( var i = 0; i < accounts1.length; i++ )
             {
