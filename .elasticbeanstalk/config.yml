@@ -1,4 +1,6 @@
 branch-defaults:
+  deployment:
+    environment: RiverBank-env
   master:
     environment: RiverBank-env
     group_suffix: null
