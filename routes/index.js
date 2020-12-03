@@ -531,7 +531,7 @@ const storage = multer.diskStorage({
 		cb(null, 'image-' + Date.now() + path.extname(file.originalname));
 	}
 });
-const upload = multer({ storage: storage });
+const upload = multer({ dest: 'uploads/' });
 
 router.post('/data-deposit', upload.single("image"), (req, res, next) => {
 	// req.file contains the image
@@ -541,6 +541,7 @@ router.post('/data-deposit', upload.single("image"), (req, res, next) => {
 	if (isNaN(amount) || amount <= 0) {
 		return res.status(400).send("Please enter a positive number.");
 	}
+	console.log('started');
 
 	// Find user
 	User.findOne({ unique_id: req.session.userId }, (err, userData) => {
