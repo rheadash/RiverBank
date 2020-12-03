@@ -1,0 +1,46 @@
+<html>
+<head>
+	<title>Cross-Accounts Transfer</title>
+	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js">
+    </script>
+    
+	<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+  <link rel="stylesheet" href="./css/main.css">
+  
+</head>
+
+<body>
+    <p>Pick two accounts to complete a transfer.</p>
+
+    <p> From <%= accounts1[0].username%>'s account: </p>
+
+    <form action="/transfer" id = "transfer-form" method = "POST">
+        <select id="from" name = "from">
+            <% for ( var i = 0; i < accounts1.length; i++ )
+            {
+                %><option value="<%= accounts1[i].unique_id %>"><%=accounts1[i].name %>:  $<%=accounts1[i].balance %></option><%
+            }
+            %>
+        </select>
+        <p> To <%= accounts2[0].username%>'s account: </p>
+        <select id="to" name = "to">
+            <% for ( var i = 0; i < accounts2.length; i++ )
+            {
+                %><option value="<%= accounts2[i].unique_id %>"><%=accounts2[i].name %>:  $<%=accounts2[i].balance %></option><%
+            }
+            %>
+        </select>
+
+        <p> Transfer:</p>
+        $<input placeholder="Amount" name="amount">
+        <input type="submit" value="Transfer" class="btn btn-success">
+    </form>
+
+
+    <div class="abc">
+        <a href="/profile">Back to summary page</a>
+    </div>
+    
+</body>
+</html>

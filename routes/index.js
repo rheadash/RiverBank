@@ -693,6 +693,69 @@ router.post('/forgetpass', (req, res, next) => {
 
 });
 
+
+router.post('/customer-transfer', (req ,res, next) => {
+	//res.send("inside customer trasnfer");
+	let userId = req.session.userId;
+	let transferReceipient = req.body.receipientUsername;
+
+
+	//find this second user
+	User.findOne({username: transferReceipient}, function(err, foundUser){
+		if(err){
+			console.log("err in finding User", err);
+		}else{
+			console.log("users username: ", foundUser.username);
+			Checking.find({username: foundUser.username}, function(err, foundCheckings){
+				if(err){
+					console.log("error in found Checkings", err)
+				}else{
+					console.log("found checkings", foundCheckings);
+					Saving.find({username: foundUser.username}, function(err, foundSavings){
+						if(err){
+							console.log("ERROR in found savings", err);
+						}else{
+							console.log("found savings", foundSavings);
+							//find logged accounts 
+							User.findOne({unique_id: userId}, function(err, foundOwnUser){
+								if(err){
+									console.log("error in own user", err)
+								}else{
+									console.log("own user username", foundOwnUser.username);
+									Checking.find({username: foundOwnUser.username}, function(err, foundOwnCheckings){
+										if(err){
+											console.log("err in foundOwnChecking", err);
+										}else{
+											console.log("foundOwnCheckings", foundOwnCheckings);
+											Saving.find({username: foundOwnUser.username}, function(err, foundOwnSavings){
+												if(err){
+													console.log("error in foundOwnSavings", err);
+												}else{
+													console.log("foundOwnSavings", foundOwnSavings);
+													var accounts1 = foundOwnCheckings.concat(foundOwnSavings);
+													console.log("accounts1",accounts1);
+													var accounts2 = foundCheckings.concat(foundSavings);
+													console.log("accounts2",accounts2);
+													res.render("transferhandler.ejs", {"accounts1": accounts1, "accounts2": accounts2});
+												}
+											});
+										}
+									});
+								}
+							});
+						}
+					});
+				}
+			});
+		}
+	});
+});
+
+
+router.post("/customer-transfer-handler", (req,res,next) => {
+	res.send("got thru")
+});
+
 function getTimestamp() {
 	let date_ob = new Date();
 	// current date
