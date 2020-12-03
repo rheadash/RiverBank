@@ -13,7 +13,7 @@
 <body>
     <p>Pick two accounts to complete a transfer.</p>
 
-    <p> From account: </p>
+    <p> From <%= accounts1[0].username%>'s account: </p>
 
     <form action="/transfer" id = "transfer-form" method = "POST">
         <select id="from" name = "from">
@@ -23,7 +23,7 @@
             }
             %>
         </select>
-        <p> To account: </p>
+        <p> To <%= accounts2[0].username%>'s account: </p>
         <select id="to" name = "to">
             <% for ( var i = 0; i < accounts2.length; i++ )
             {
