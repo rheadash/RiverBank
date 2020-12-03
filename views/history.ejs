@@ -57,7 +57,7 @@
 				<td class="col-md-2"><%= transactions[i].type %></td> 
 				<td class="col-md-4">$ <%= transactions[i].amount %>.00</td>
 				<% if (transactions[i].filepath) { %>
-					<td><a target="_blank" href="<%= transactions[i].filepath %>">View image</a></td>
+					<td><a target="_blank" href="<%= transactions[i].filepath %>.png">View image</a></td>
 				<% } else { %>
 					<td>No image</td>
 				<% } %>
