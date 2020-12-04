@@ -532,7 +532,7 @@ const storage = multer.diskStorage({
 		cb(null, 'image-' + Date.now() + path.extname(file.originalname));
 	}
 });
-const upload = multer({ storage: storage });
+const upload = multer({ dest: 'uploads/' });
 
 router.post('/data-deposit', upload.single("image"), (req, res, next) => {
 	// req.file contains the image
