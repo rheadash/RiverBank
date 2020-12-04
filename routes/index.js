@@ -393,7 +393,8 @@ router.post('/transfer', (req, res, next) => {
 			fromAccount.balance -= amount;
 			toAccount.balance += amount;
 			fromAccount.save((err, doc) => {
-				res.status(200).send("Transferred out $" + req.body.amount + " from the account" + fromAccount.name);
+				//res.status(200).send("Transferred out $" + req.body.amount + " from the account" + fromAccount.name);
+				res.redirect("/profile");
 			});
 			toAccount.save((err, doc) => {
 				
