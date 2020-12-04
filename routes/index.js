@@ -393,8 +393,7 @@ router.post('/transfer', (req, res, next) => {
 			fromAccount.balance -= amount;
 			toAccount.balance += amount;
 			fromAccount.save((err, doc) => {
-				//res.status(200).send("Transferred out $" + req.body.amount + " from the account" + fromAccount.name);
-				res.redirect("/profile");
+				res.status(200).send("Transferred out $" + req.body.amount + " from the account" + fromAccount.name);
 			});
 			toAccount.save((err, doc) => {
 				
@@ -453,8 +452,6 @@ router.post('/transfer', (req, res, next) => {
 				});
 	
 			});
-			
-			
 		}
 	}
 });
@@ -555,14 +552,15 @@ router.post('/data-deposit', upload.single("image"), (req, res, next) => {
 	
 		function depositCallback(accountDoc, amount) {
 			if (!accountDoc) {
-				res.status(400).send("Could not find the account");
+				//res.status(400).send("Could not find the account");
 			}
 			else {
 				// Add the amount
 				accountDoc.balance += amount;
 				// Save new amount to DB
 				accountDoc.save((err, doc) => {
-					res.status(200).send("Deposited $" + req.body.amount + " from the account" );
+					//res.status(200).send("Deposited $" + req.body.amount + " from the account" );
+					res.redirect("/profile");
 				});
 
 				var c;
